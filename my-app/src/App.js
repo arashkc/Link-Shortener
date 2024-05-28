@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
-import Shorten from "./Shorten";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
+  const [shortenedUrl, setShortenedUrl] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -11,13 +12,19 @@ function App() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("Input Value:", inputValue);
+    const randomShortenedUrl = `https://short.url/${Math.random()
+      .toString(36)
+      .substring(7)}`;
+    setShortenedUrl(randomShortenedUrl);
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
   };
 
   return (
     <div id="body">
       <form onSubmit={handleFormSubmit}>
-        {" "}
         <div id="userInput">
           <input
             type="text"
@@ -28,9 +35,15 @@ function App() {
           <button type="submit">Shorten</button>
         </div>
       </form>
-      <div id="resultArea">
-        <Shorten inputValue={inputValue} />
-      </div>
+      {shortenedUrl && (
+        <div id="resultArea">
+          Shortened URL:{" "}
+          <a href={shortenedUrl} target="_blank">
+            {shortenedUrl}
+          </a>
+        </div>
+      )}
+      {showNotification && <div id="notification">Link shortened!</div>}
     </div>
   );
 }
