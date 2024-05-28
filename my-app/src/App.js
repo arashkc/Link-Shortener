@@ -3,19 +3,14 @@ import "./App.css";
 import Shorten from "./Shorten";
 
 function App() {
-  // State to hold the input value
   const [inputValue, setInputValue] = useState("");
 
-  // Handler for input change
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  // Handler for form submission
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Pass the inputValue to the Shorten component
-    // You can perform further processing or API calls here
     console.log("Input Value:", inputValue);
   };
 
